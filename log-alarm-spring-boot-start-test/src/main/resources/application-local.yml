@@ -1,0 +1,29 @@
+log-alarm:
+  enableTraceId: true
+  mode: workWechat
+  webhook: https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=e5e52a58-e9f1-4abc-b7f9-f465caad6fb1
+  exclude:
+    #多个逗号隔开
+    throwable: java.lang.RuntimeException
+    keyword:
+#spring:
+#  kafka:
+#    bootstrap-servers: localhost:9092
+#    consumer:
+#      group-id: your-group-id
+#      auto-offset-reset: earliest
+#      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+#      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+#      properties:
+#        spring:
+#          json:
+#            trusted:
+#              packages: "com.ljw.logalarm.dto"
+#    producer:
+#      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+#      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+#      properties:
+#        spring:
+#          json:
+#            trusted:
+#              packages: "com.ljw.logalarm.dto"

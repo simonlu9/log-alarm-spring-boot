@@ -1,0 +1,18 @@
+<configuration>
+    <springProperty scope="context" name="logFile" source="logging.file.name" />
+    <appender name="CUSTOM" class="com.ljw.logalarm.core.appender.LogAlarmAppender">
+        <filter class="com.ljw.logalarm.core.filter.AlarmFilter"></filter>
+    </appender>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- 输出格式 -->
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%X{traceId}] [%thread] %logger{50} - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <root level="INFO">
+        <appender-ref ref="CUSTOM"/>
+        <appender-ref ref="STDOUT"/>
+
+    </root>
+</configuration>
