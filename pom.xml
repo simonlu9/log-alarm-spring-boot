@@ -10,9 +10,12 @@
         <module>log-alarm-spring-boot-core</module>
         <module>log-alarm-spring-boot-start-test</module>
     </modules>
-    <groupId>com.ljw</groupId>
+    <groupId>io.github.simonlu9</groupId>
     <artifactId>log-alarm-spring-boot</artifactId>
     <version>1.0.1</version>
+    <name>log-alarm-spring-boot</name>
+    <description>Log Alarm For Spring Boot Starter</description>
+    <url>https://github.com/simonlu9/log-alarm-spring-boot/tree/master</url>
     <licenses>
         <license>
             <name>MIT License</name>
@@ -27,8 +30,10 @@
         </developer>
     </developers>
     <scm>
-        <url>https://github.com/ElanYoung/lbs-spring-boot</url>
-        <connection>https://github.com/ElanYoung/lbs-spring-boot.git</connection>
+        <url>https://github.com/simonlu9/log-alarm-spring-boot/tree/master</url>
+        <connection>https://github.com/simonlu9/log-alarm-spring-boot.git</connection>
+        <developerConnection>scm:git:ssh://github.com:simonlu/log-alarm-spring-boot.git</developerConnection>
+
     </scm>
     <distributionManagement>
         <snapshotRepository>
@@ -136,6 +141,7 @@
                         </goals>
                     </execution>
                 </executions>
+
             </plugin>
         </plugins>
     </build>

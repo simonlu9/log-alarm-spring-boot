@@ -12,7 +12,7 @@
 1. 克隆这个仓库：
    ```bash
    <dependency>
-      <groupId>com.ljw</groupId>
+      <groupId>io.github.simonlu9</groupId>
       <artifactId>log-alarm-springboot-starter</artifactId>
       <version>1.0.1</version>
    </dependency>
