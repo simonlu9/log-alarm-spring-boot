@@ -12,7 +12,7 @@
     </modules>
     <groupId>io.github.simonlu9</groupId>
     <artifactId>log-alarm-spring-boot</artifactId>
-    <version>1.0.1</version>
+    <version>${revision}</version>
     <name>log-alarm-spring-boot</name>
     <description>Log Alarm For Spring Boot Starter</description>
     <url>https://github.com/simonlu9/log-alarm-spring-boot/tree/master</url>
@@ -48,6 +48,7 @@
 
 
     <properties>
+        <revision>1.0.1-SB3</revision>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <java.version>17</java.version>
