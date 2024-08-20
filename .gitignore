@@ -38,3 +38,7 @@ build/
 ### Mac OS ###
 .DS_Store
 /.idea/
+/log-alarm-spring-boot-autoconfigure/.flattened-pom.xml
+/log-alarm-spring-boot-core/.flattened-pom.xml
+/log-alarm-spring-boot-starter/.flattened-pom.xml
+/.flattened-pom.xml

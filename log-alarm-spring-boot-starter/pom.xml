@@ -6,6 +6,7 @@
         <artifactId>log-alarm-spring-boot</artifactId>
         <groupId>io.github.simonlu9</groupId>
         <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -18,7 +19,6 @@
         <dependency>
             <groupId>io.github.simonlu9</groupId>
             <artifactId>log-alarm-spring-boot-autoconfigure</artifactId>
-            <version>${revision}</version>
         </dependency>
     </dependencies>
 

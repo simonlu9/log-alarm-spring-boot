@@ -33,7 +33,6 @@
         <dependency>
             <groupId>io.github.simonlu9</groupId>
             <artifactId>log-alarm-spring-boot-core</artifactId>
-            <version>${revision}</version>
         </dependency>
     </dependencies>
 </project>

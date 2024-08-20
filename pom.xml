@@ -8,7 +8,7 @@
         <module>log-alarm-spring-boot-starter</module>
         <module>log-alarm-spring-boot-autoconfigure</module>
         <module>log-alarm-spring-boot-core</module>
-        <module>log-alarm-spring-boot-start-test</module>
+<!--        <module>log-alarm-spring-boot-start-test</module>-->
     </modules>
     <groupId>io.github.simonlu9</groupId>
     <artifactId>log-alarm-spring-boot</artifactId>
@@ -57,9 +57,31 @@
         <lombok.version>1.18.24</lombok.version>
         <fastjson2.version>2.0.42</fastjson2.version>
         <logback-encoder.version>5.3</logback-encoder.version>
+        <flatten-maven-plugin.version>1.5.0</flatten-maven-plugin.version>
     </properties>
     <dependencyManagement>
         <dependencies>
+            <!-- 模块依赖 -->
+            <dependency>
+                <groupId>io.github.simonlu9</groupId>
+                <artifactId>log-alarm-spring-boot-autoconfigure</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.simonlu9</groupId>
+                <artifactId>log-alarm-spring-boot-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.simonlu9</groupId>
+                <artifactId>log-alarm-spring-boot-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.example</groupId>
+                <artifactId>module-b</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <!-- Spring Boot 依赖 -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -145,6 +167,33 @@
                 </executions>
 
             </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+                <version>${flatten-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>flatten</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>flatten</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>flatten.clean</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <flattenMode>resolveCiFriendliesOnly</flattenMode>
+                    <updatePomFile>true</updatePomFile>
+                </configuration>
+            </plugin>
+
         </plugins>
     </build>
 
