@@ -23,7 +23,6 @@
         <dependency>
             <groupId>io.github.simonlu9</groupId>
             <artifactId>log-alarm-spring-boot-starter</artifactId>
-            <version>${revision}</version>
         </dependency>
     </dependencies>
 </project>
