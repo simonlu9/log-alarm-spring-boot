@@ -20,7 +20,6 @@
    ```
 - springboot3.x版本
  ```bash
-   <dependency>
     <dependency>
       <groupId>io.github.simonlu9</groupId>
       <artifactId>log-alarm-springboot-starter</artifactId>
