@@ -8,7 +8,7 @@
         <module>log-alarm-spring-boot-starter</module>
         <module>log-alarm-spring-boot-autoconfigure</module>
         <module>log-alarm-spring-boot-core</module>
-<!--        <module>log-alarm-spring-boot-start-test</module>-->
+        <module>log-alarm-spring-boot-start-test</module>
     </modules>
     <groupId>io.github.simonlu9</groupId>
     <artifactId>log-alarm-spring-boot</artifactId>

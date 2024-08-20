@@ -33,7 +33,8 @@ public class WorkWechatAlarmService implements AlarmService {
         this.restTemplate = restTemplate;
     }
 
-    public WorkWechatAlarmService() {
+    public WorkWechatAlarmService(String webhook) {
+        this.webhook = webhook;
         SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
         factory.setConnectTimeout(CONNECTIONTIMEOUT);
         factory.setReadTimeout(READTIMEOUT);

@@ -25,5 +25,10 @@ public class ApiController {
         asyncService.test();
         return ResponseEntity.ok("async");
     }
+    @GetMapping("/error")
+    public ResponseEntity<String> error() {
+         log.error("error");
+        return ResponseEntity.ok("error");
+    }
 
 }

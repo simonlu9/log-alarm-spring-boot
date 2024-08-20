@@ -19,11 +19,6 @@ public class Sender {
 
     private static final Map<String, AlarmService> STRATEGIES = new HashMap<>();
 
-    static {
-        //STRATEGIES.put("dingding", new DingDingAlarmService());
-        STRATEGIES.put("workWechat", new WorkWechatAlarmService());
-    }
-
     public Sender(String alarmMode,String webhook) {
         this.alarmMode = alarmMode;
         this.webhook = webhook;
@@ -32,7 +27,7 @@ public class Sender {
     private final ExecutorService executor =  Executors.newSingleThreadExecutor();
 
     public void init() {
-
+        STRATEGIES.put("workWechat", new WorkWechatAlarmService(webhook));
         executor.execute(new Runnable() {
             @Override
             public void run() {
