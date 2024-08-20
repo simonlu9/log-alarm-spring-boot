@@ -14,7 +14,7 @@
    ```bash
    <dependency>
       <groupId>io.github.simonlu9</groupId>
-      <artifactId>log-alarm-springboot-starter</artifactId>
+      <artifactId>log-alarm-spring-boot-starter</artifactId>
       <version>1.0.1</version>
    </dependency>
    ```
@@ -22,7 +22,7 @@
  ```bash
     <dependency>
       <groupId>io.github.simonlu9</groupId>
-      <artifactId>log-alarm-springboot-starter</artifactId>
+      <artifactId>log-alarm-spring-boot-starter</artifactId>
       <version>1.0.1-SB3</version>
    </dependency>
   ```
