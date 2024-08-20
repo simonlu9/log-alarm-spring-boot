@@ -42,3 +42,4 @@ build/
 /log-alarm-spring-boot-core/.flattened-pom.xml
 /log-alarm-spring-boot-starter/.flattened-pom.xml
 /.flattened-pom.xml
+/log-alarm-spring-boot-start-test/.flattened-pom.xml
