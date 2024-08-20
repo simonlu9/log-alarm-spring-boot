@@ -48,7 +48,7 @@
 
 
     <properties>
-        <revision>1.0.1</revision>
+        <revision>1.0.2</revision>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <java.version>17</java.version>
