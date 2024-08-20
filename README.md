@@ -7,14 +7,21 @@
 - 支持traceId全局日志跟踪,包括web请求,Async任务,消息队列
 - 支持错误异常类或关键字忽略告警
 
-## 安装
+## 使用
 
-1. 克隆这个仓库：
+1. 增加依赖
    ```bash
+   springboot2.x
    <dependency>
       <groupId>io.github.simonlu9</groupId>
       <artifactId>log-alarm-springboot-starter</artifactId>
       <version>1.0.1</version>
+   </dependency>
+   springboot3.x
+    <dependency>
+      <groupId>io.github.simonlu9</groupId>
+      <artifactId>log-alarm-springboot-starter</artifactId>
+      <version>1.0.1-SB3</version>
    </dependency>
    ```
 ## 使用
