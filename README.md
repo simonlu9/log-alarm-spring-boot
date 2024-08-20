@@ -10,20 +10,23 @@
 ## 使用
 
 1. 增加依赖
+- springboot2.x版本
    ```bash
-   springboot2.x
    <dependency>
       <groupId>io.github.simonlu9</groupId>
       <artifactId>log-alarm-springboot-starter</artifactId>
       <version>1.0.1</version>
    </dependency>
-   springboot3.x
+   ```
+- springboot3.x版本
+ ```bash
+   <dependency>
     <dependency>
       <groupId>io.github.simonlu9</groupId>
       <artifactId>log-alarm-springboot-starter</artifactId>
       <version>1.0.1-SB3</version>
    </dependency>
-   ```
+  ```
 ## 使用
 
 提供一些示例代码或使用说明，帮助用户了解如何使用你的项目。
