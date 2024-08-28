@@ -28,6 +28,7 @@ public class Sender {
 
     public void init() {
         STRATEGIES.put("workWechat", new WorkWechatAlarmService(webhook));
+        STRATEGIES.put("dingding",new DingdingAlarmService(webhook));
         executor.execute(new Runnable() {
             @Override
             public void run() {
