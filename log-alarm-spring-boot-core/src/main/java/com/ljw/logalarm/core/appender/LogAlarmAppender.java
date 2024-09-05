@@ -8,12 +8,18 @@ import com.ljw.logalarm.core.context.LogAlarmContext;
 import com.ljw.logalarm.core.dto.AlarmMessageDTO;
 import lombok.extern.slf4j.Slf4j;
 import net.logstash.logback.stacktrace.ShortenedThrowableConverter;
+import org.slf4j.MDC;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static com.ljw.logalarm.core.filter.LogParamsFilter.REQUEST_BODY;
+import static com.ljw.logalarm.core.filter.LogParamsFilter.REQUEST_PARAMS;
+import static com.ljw.logalarm.core.filter.TraceIdFilter.TRACE_ID;
 
 /**
  * @author lujianwen@wsyxmall.com
@@ -58,11 +64,14 @@ public class LogAlarmAppender extends AppenderBase<LoggingEvent> {
             }
             trackMessage = stackTrace;
         }
-        String template = "异常来源: %s\n日志内容: %s\n异常时间: %s\n异常描述: %s\n详细信息:\n%s";
+        String template = "TraceId: %s\n请求参数: %s\n请求BODY: %s\n异常来源: %s\n日志内容: %s\n异常时间: %s\n异常描述: %s\n详细信息:\n%s";
         LocalDateTime date = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String formattedDate = date.format(formatter);
         return String.format(template,
+                MDC.get(TRACE_ID),
+                MDC.get(REQUEST_PARAMS),
+                MDC.get(REQUEST_BODY),
                 //LoggerName表示生成该日志记录器的名字，即打印日志的类的完整类路径
                 eventObject.getLoggerName(),
                 //日志内容

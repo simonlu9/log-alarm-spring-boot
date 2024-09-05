@@ -1,9 +1,9 @@
 log-alarm:
   enableTraceId: true
-#  mode: workWechat
-#  webhook: https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=e5e52a58-e9f1-4abc-b7f9-f465caad6fb1
-  mode: dingding
-  webhook: https://oapi.dingtalk.com/robot/send?access_token=7313b1e9717a4c47056d258e8778a3238b9ddc296c333b529c5ae6cca122c045
+  mode: workWechat
+  webhook: https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=e5e52a58-e9f1-4abc-b7f9-f465caad6fb1
+#  mode: dingding
+#  webhook: https://oapi.dingtalk.com/robot/send?access_token=7313b1e9717a4c47056d258e8778a3238b9ddc296c333b529c5ae6cca122c045
   exclude:
     #多个逗号隔开
     throwable: java.lang.RuntimeException

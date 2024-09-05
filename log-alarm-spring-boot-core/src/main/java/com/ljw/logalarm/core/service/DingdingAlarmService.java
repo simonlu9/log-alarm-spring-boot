@@ -50,7 +50,9 @@ public class DingdingAlarmService implements AlarmService {
     public void doAlarm(String msg) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<String> formEntity = new HttpEntity<String>(String.format(BODY,msg), headers);
+        JSONObject jsonObject = JSONObject.parseObject(BODY);
+        jsonObject.getJSONObject("text").put("content",msg);
+        HttpEntity<String> formEntity = new HttpEntity<String>(jsonObject.toString(), headers);
         String result = restTemplate.postForObject(webhook, formEntity, String.class);
         log.debug("[WorkWechatAlarmService] response info [{}]", result);
         WorkWechatAlarmResponseDTO wechatAlarmResponseDTO = JSONObject.parseObject(result,WorkWechatAlarmResponseDTO.class);

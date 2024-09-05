@@ -1,6 +1,7 @@
 package com.ljw.logalarm.autoconfigure;
 
 import com.ljw.logalarm.core.filter.AlarmFilter;
+import com.ljw.logalarm.core.filter.LogParamsFilter;
 import com.ljw.logalarm.core.filter.TraceIdFilter;
 import com.ljw.logalarm.core.service.Sender;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -9,6 +10,7 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * @author lujianwen@wsyxmall.com
@@ -16,7 +18,7 @@ import org.springframework.core.Ordered;
  */
 @Configuration
 @EnableConfigurationProperties(LogAlarmProperties.class)
-public class LogAlarmAutoConfiguration {
+public class LogAlarmAutoConfiguration implements WebMvcConfigurer {
     private final LogAlarmProperties logAlarmProperties;
 
     public LogAlarmAutoConfiguration(LogAlarmProperties logAlarmProperties) {
@@ -44,5 +46,14 @@ public class LogAlarmAutoConfiguration {
         return registration;
     }
 
-
+    @ConditionalOnProperty(name = "log-alarm.enableTraceId", havingValue = "true")
+    @Bean
+    public FilterRegistrationBean<LogParamsFilter> logParamsFilter() {
+        FilterRegistrationBean<LogParamsFilter> registration = new FilterRegistrationBean<>();
+        registration.setFilter(new LogParamsFilter());
+        registration.addUrlPatterns("/*");
+        registration.setName("logParamsFilter");
+        registration.setOrder(Ordered.HIGHEST_PRECEDENCE);
+        return registration;
+    }
 }

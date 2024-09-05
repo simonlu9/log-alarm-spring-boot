@@ -1,13 +1,12 @@
 package com.ljw.logalarm.test.controller;
 
 
+import com.ljw.logalarm.test.req.FooReq;
 import com.ljw.logalarm.test.service.AsyncService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
@@ -17,7 +16,7 @@ public class ApiController {
     private AsyncService asyncService;
     @GetMapping("/greet")
     public ResponseEntity<String> greet() {
-        log.info("greet");
+        log.error("greet");
         return ResponseEntity.ok("Hello, World!");
     }
     @GetMapping("/async")
@@ -28,6 +27,12 @@ public class ApiController {
     @GetMapping("/error")
     public ResponseEntity<String> error() {
          log.error("error");
+        return ResponseEntity.ok("error");
+    }
+    @PostMapping("/json")
+    public ResponseEntity<String> json(@RequestBody FooReq req) {
+        //log.error("error");
+        log.error(req.toString());
         return ResponseEntity.ok("error");
     }
 

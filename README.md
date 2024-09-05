@@ -67,7 +67,18 @@ log-alarm:
     </root>
 </configuration>
 ```
+## 效果
+```
+TraceId: eab7f50cec0146aabc14132084e9d784
+请求参数: null
+请求BODY: {"name": "simonlu", "age": 11}
+异常来源: com.ljw.logalarm.test.controller.ApiController
+日志内容: 错误消息
+异常时间: 2024-09-05 16:39:49
+异常描述: 
+详细信息:
 
+```
 
 ## 贡献
 

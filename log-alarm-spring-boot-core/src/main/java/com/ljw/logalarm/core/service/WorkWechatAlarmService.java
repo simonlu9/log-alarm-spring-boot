@@ -45,7 +45,9 @@ public class WorkWechatAlarmService implements AlarmService {
 
     @Override
     public void doAlarm(String msg) {
-        String result = restTemplate.postForObject(webhook, String.format(BODY,msg), String.class);
+        JSONObject jsonObject = JSONObject.parseObject(BODY);
+        jsonObject.getJSONObject("text").put("content",msg);
+        String result = restTemplate.postForObject(webhook, jsonObject.toString(), String.class);
         log.debug("[WorkWechatAlarmService] response info [{}]", result);
         WorkWechatAlarmResponseDTO wechatAlarmResponseDTO = JSONObject.parseObject(result,WorkWechatAlarmResponseDTO.class);
         Integer errCode = wechatAlarmResponseDTO.getErrCode();
