@@ -9,11 +9,8 @@ import javax.servlet.http.HttpServletRequestWrapper;
 import java.io.*;
 
 /**
- * @author jianwen.lu
- * @version 1.0
- * @description TODO
- * @date 2023-03-15 9:40
- * @since 1.8
+ * @author lujianwen9@gmail.com
+ * @since 2023-12-20 15:12
  */
 public class RequestWrapper extends HttpServletRequestWrapper {
 

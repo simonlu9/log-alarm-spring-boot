@@ -13,7 +13,7 @@ import org.springframework.core.Ordered;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
- * @author lujianwen@wsyxmall.com
+ * @author lujianwen9@gmail.com
  * @since 2024-08-15 14:53
  */
 @Configuration

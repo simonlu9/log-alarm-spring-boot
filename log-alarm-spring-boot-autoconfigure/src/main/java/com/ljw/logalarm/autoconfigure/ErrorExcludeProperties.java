@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.Set;
 
 /**
- * @author lujianwen@wsyxmall.com
+ * @author lujianwen9@gmail.com
  * @since 2024-08-16 11:36
  */
 @Data

@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * @author lujianwen@wsyxmall.com
+ * @author lujianwen9@gmail.com
  * @since 2024-08-08 16:59
  */
 public class AlarmFilter extends Filter<ILoggingEvent> {
@@ -28,7 +28,6 @@ public class AlarmFilter extends Filter<ILoggingEvent> {
             }
             return FilterReply.ACCEPT;
         }
-        //todo 加入请求参数，加入traceId
         return FilterReply.DENY;
     }
 }

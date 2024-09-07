@@ -9,7 +9,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * @author lujianwen@wsyxmall.com
+ * @author lujianwen9@gmail.com
  * @since 2024-08-07 15:32
  */
 

@@ -13,7 +13,7 @@ import org.springframework.web.client.RestTemplate;
 import java.nio.charset.StandardCharsets;
 
 /**
- * @author lujianwen@wsyxmall.com
+ * @author lujianwen9@gmail.com
  * @since 2023-12-20 15:12
  */
 @Slf4j

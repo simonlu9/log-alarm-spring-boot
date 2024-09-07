@@ -1,5 +1,6 @@
 package com.ljw.logalarm.core.filter;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -10,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.UUID;
-
+@Slf4j
 public class TraceIdFilter extends OncePerRequestFilter {
 
     public static final String TRACE_ID = "traceId";
@@ -21,11 +22,13 @@ public class TraceIdFilter extends OncePerRequestFilter {
         try {
             String traceId = request.getHeader(TRACE_ID);
             if (StringUtils.isEmpty(traceId)) {
-                traceId = UUID.randomUUID().toString().replace("-", "");
+                traceId = UUID.randomUUID().toString().replace("-", "").substring(0, 10);
             }
             MDC.put(TRACE_ID, traceId);
             filterChain.doFilter(request, response);
-        } finally {
+        }catch (Exception e){
+            log.error(e.getMessage(),e);
+        }finally {
             MDC.clear();
         }
     }

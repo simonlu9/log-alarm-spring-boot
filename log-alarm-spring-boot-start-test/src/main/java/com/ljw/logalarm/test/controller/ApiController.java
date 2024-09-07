@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 @RestController
 @RequestMapping("/api")
@@ -35,5 +36,13 @@ public class ApiController {
         log.error(req.toString());
         return ResponseEntity.ok("error");
     }
+    @GetMapping("/http")
+    public ResponseEntity<String> http() {
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> result = restTemplate.getForEntity("http://v2.haokan123.icu",String.class);
+        log.info(result.toString());
+        return ResponseEntity.ok("http");
+    }
+
 
 }

@@ -22,7 +22,7 @@ import static com.ljw.logalarm.core.filter.LogParamsFilter.REQUEST_PARAMS;
 import static com.ljw.logalarm.core.filter.TraceIdFilter.TRACE_ID;
 
 /**
- * @author lujianwen@wsyxmall.com
+ * @author lujianwen9@gmail.com
  * @since 2024-08-07 10:45
  */
 @Slf4j

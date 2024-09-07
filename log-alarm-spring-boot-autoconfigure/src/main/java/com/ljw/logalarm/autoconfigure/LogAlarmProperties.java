@@ -4,7 +4,7 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * @author lujianwen@wsyxmall.com
+ * @author lujianwen9@gmail.com
  * @since 2024-08-15 14:51
  */
 @ConfigurationProperties(prefix = LogAlarmProperties.LOG_ALARM_PREFIX)

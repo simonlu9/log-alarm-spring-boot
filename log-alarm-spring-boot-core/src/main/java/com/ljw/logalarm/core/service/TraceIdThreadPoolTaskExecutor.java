@@ -8,7 +8,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 
 /**
- * @author lujianwen@wsyxmall.com
+ * @author lujianwen9@gmail.com
  * @since 2024-08-15 17:13
  */
 public class TraceIdThreadPoolTaskExecutor extends ThreadPoolTaskExecutor {
