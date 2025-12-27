@@ -63,8 +63,6 @@ public class TraceIdThreadPoolTaskExecutor extends ThreadPoolTaskExecutor {
             }
             try {
                 task.run();
-            }catch (Exception e){
-                log.error(e.getMessage(),e);
             } finally {
                 // 执行后的逻辑
                 MDC.clear();
@@ -72,4 +70,30 @@ public class TraceIdThreadPoolTaskExecutor extends ThreadPoolTaskExecutor {
         };
         return super.submit(wrappedTask);
     }
+
+    @Override
+    public <T> Future<T> submit(Callable<T> task) {
+        return super.submit(wrap(task));
+    }
+    private <T> Callable<T> wrap(Callable<T> task) {
+        String parentTraceId = MDC.get(TRACE_ID);
+
+        return () -> {
+            boolean needClear = false;
+            try {
+                if (parentTraceId == null) {
+                    MDC.put(TRACE_ID, genTraceId());
+                    needClear = true;
+                } else {
+                    MDC.put(TRACE_ID, parentTraceId);
+                }
+                return task.call();
+            } finally {
+                if (needClear) {
+                    MDC.remove(TRACE_ID);
+                }
+            }
+        };
+    }
+
 }

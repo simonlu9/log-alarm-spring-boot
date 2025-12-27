@@ -51,7 +51,11 @@ class ApiControllerTest {
     }
 
     @Test
-    void async() {
+    void async() throws Exception {
+        mockMvc.perform(get("/api/async"))
+                .andExpect(status().isOk())
+                .andExpect(content().string("async"));
+        System.in.read();
     }
 
     @Test
