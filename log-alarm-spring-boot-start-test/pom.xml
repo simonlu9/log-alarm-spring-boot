@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>log-alarm-spring-boot-start-test</artifactId>
-
+    <name>log-alarm-spring-boot-start-test</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
