@@ -91,7 +91,7 @@ log-alarm:
 ```
     @Bean
     @Primary
-    public ThreadPoolTaskExecutor{
+    public ThreadPoolTaskExecutor customTaskExecutor() {
         TraceIdThreadPoolTaskExecutor executor =  new TraceIdThreadPoolTaskExecutor();
         executor.setThreadNamePrefix("trace-id-task-executor-");
         executor.setCorePoolSize(4);
