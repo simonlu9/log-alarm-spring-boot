@@ -89,8 +89,9 @@ log-alarm:
 
 ## `springboot @Async` 自定义线程池
 ```
-   @Bean
-    public Executor customTaskExecutor() {
+    @Bean
+    @Primary
+    public ThreadPoolTaskExecutor{
         TraceIdThreadPoolTaskExecutor executor =  new TraceIdThreadPoolTaskExecutor();
         executor.setThreadNamePrefix("trace-id-task-executor-");
         executor.setCorePoolSize(4);
