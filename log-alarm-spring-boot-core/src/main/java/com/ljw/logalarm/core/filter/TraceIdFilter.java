@@ -11,6 +11,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.UUID;
 @Slf4j
 public class TraceIdFilter extends OncePerRequestFilter {
@@ -20,6 +21,7 @@ public class TraceIdFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
+        Map<String, String> previousContext = MDC.getCopyOfContextMap();
         try {
             log.debug("[TraceIdFilter] begin");
             String traceId = request.getHeader(TRACE_ID);
@@ -30,7 +32,11 @@ public class TraceIdFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
         }finally {
             log.debug("[TraceIdFilter] end");
-            MDC.clear();
+            if (previousContext == null) {
+                MDC.clear();
+            } else {
+                MDC.setContextMap(previousContext);
+            }
         }
     }
     public static String genTraceId(){

@@ -5,6 +5,7 @@ import org.slf4j.MDC;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.util.StringUtils;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
@@ -18,82 +19,64 @@ import static com.ljw.logalarm.core.filter.TraceIdFilter.genTraceId;
  */
 @Slf4j
 public class TraceIdThreadPoolTaskExecutor extends ThreadPoolTaskExecutor {
-    /**
-     * 所有线程都会委托给这个execute方法，在这个方法中我们把父线程的MDC内容赋值给子线程
-     * https://logback.qos.ch/manual/mdc.html#managedThreads
-     *
-     * @param runnable runnable
-     */
     @Override
     public void execute(Runnable runnable) {
-        // 获取父线程MDC中的内容，必须在run方法之前，否则等异步线程执行的时候有可能MDC里面的值已经被清空了，这个时候就会返回null
-        Map<String, String> context = MDC.getCopyOfContextMap();
-        if(context==null||StringUtils.isEmpty(context.get(TRACE_ID))){
-            String traceId = genTraceId();
-            MDC.put(TRACE_ID, traceId);
-        }else{
-            MDC.setContextMap(context);
-        }
-        super.execute(() -> {
-            // 将父线程的MDC内容传给子线程
-            try {
-                // 执行异步操作
-                runnable.run();
-            }catch (Exception e){
-                log.error(e.getMessage(),e);
-            }finally {
-                // 清空MDC内容
-                MDC.clear();
-            }
-        });
+        Map<String, String> context = prepareContext(MDC.getCopyOfContextMap());
+        super.execute(() -> runWithMdc(context, runnable));
     }
 
 
 
     @Override
     public Future<?> submit(Runnable task) {
-        Runnable wrappedTask = () -> {
-            // 执行前的逻辑
-            Map<String, String> context = MDC.getCopyOfContextMap();
-            if(context==null||StringUtils.isEmpty(context.get(TRACE_ID))){
-                String traceId = genTraceId();
-                MDC.put(TRACE_ID, traceId);
-            }else{
-                MDC.setContextMap(context);
-            }
-            try {
-                task.run();
-            } finally {
-                // 执行后的逻辑
-                MDC.clear();
-            }
-        };
-        return super.submit(wrappedTask);
+        Map<String, String> context = prepareContext(MDC.getCopyOfContextMap());
+        return super.submit(() -> runWithMdc(context, task));
     }
 
     @Override
     public <T> Future<T> submit(Callable<T> task) {
-        return super.submit(wrap(task));
+        Map<String, String> context = prepareContext(MDC.getCopyOfContextMap());
+        return super.submit(wrap(context, task));
     }
-    private <T> Callable<T> wrap(Callable<T> task) {
-        String parentTraceId = MDC.get(TRACE_ID);
 
+    private Map<String, String> prepareContext(Map<String, String> context) {
+        Map<String, String> resolved = context == null ? new HashMap<>() : new HashMap<>(context);
+        if (!StringUtils.hasText(resolved.get(TRACE_ID))) {
+            resolved.put(TRACE_ID, genTraceId());
+        }
+        return resolved;
+    }
+
+    private void runWithMdc(Map<String, String> context, Runnable task) {
+        Map<String, String> previous = MDC.getCopyOfContextMap();
+        try {
+            MDC.setContextMap(context);
+            task.run();
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        } finally {
+            restoreMdc(previous);
+        }
+    }
+
+    private <T> Callable<T> wrap(Map<String, String> context, Callable<T> task) {
         return () -> {
-            boolean needClear = false;
+            Map<String, String> previous = MDC.getCopyOfContextMap();
             try {
-                if (parentTraceId == null) {
-                    MDC.put(TRACE_ID, genTraceId());
-                    needClear = true;
-                } else {
-                    MDC.put(TRACE_ID, parentTraceId);
-                }
+                MDC.setContextMap(context);
                 return task.call();
             } finally {
-                if (needClear) {
-                    MDC.remove(TRACE_ID);
-                }
+                restoreMdc(previous);
             }
         };
+    }
+
+    private void restoreMdc(Map<String, String> previous) {
+        if (previous == null || previous.isEmpty()) {
+            MDC.clear();
+        } else {
+            MDC.setContextMap(previous);
+        }
     }
 
 }

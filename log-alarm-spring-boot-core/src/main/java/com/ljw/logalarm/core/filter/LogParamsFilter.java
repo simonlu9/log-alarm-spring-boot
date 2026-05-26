@@ -35,16 +35,24 @@ public class LogParamsFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
-        // 提前获得参数，避免 XssFilter 过滤处理
-        Map<String, String> queryString = buildParametersMap(request);
-        String requestBody = CacheRequestBodyFilter.isJsonRequest(request) ? getBody(request) : null;
-        MDC.put(APP_NAME, applicationName);
-        MDC.put(REQUEST_METHOD, request.getMethod());
-        MDC.put(REQUEST_URL, request.getRequestURI());
-        MDC.put(REQUEST_PARAMS, JSONObject.from(queryString).toString());
-        MDC.put(REQUEST_BODY,requestBody);
-        chain.doFilter(request, response);
-
+        Map<String, String> previousContext = MDC.getCopyOfContextMap();
+        try {
+            // 提前获得参数，避免 XssFilter 过滤处理
+            Map<String, String> queryString = buildParametersMap(request);
+            String requestBody = CacheRequestBodyFilter.isJsonRequest(request) ? getBody(request) : null;
+            MDC.put(APP_NAME, applicationName);
+            MDC.put(REQUEST_METHOD, request.getMethod());
+            MDC.put(REQUEST_URL, request.getRequestURI());
+            MDC.put(REQUEST_PARAMS, JSONObject.from(queryString).toString());
+            MDC.put(REQUEST_BODY,requestBody);
+            chain.doFilter(request, response);
+        } finally {
+            if (previousContext == null) {
+                MDC.clear();
+            } else {
+                MDC.setContextMap(previousContext);
+            }
+        }
     }
     private Map<String, String> buildParametersMap(HttpServletRequest httpServletRequest) {
         Map<String, String> resultMap = new HashMap<>();

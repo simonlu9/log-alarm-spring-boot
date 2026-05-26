@@ -4,19 +4,15 @@ import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.spi.IThrowableProxy;
 import ch.qos.logback.classic.spi.LoggingEvent;
 import ch.qos.logback.core.AppenderBase;
-import com.alibaba.fastjson2.JSONObject;
 import com.ljw.logalarm.core.context.LogAlarmContext;
 import com.ljw.logalarm.core.dto.AlarmMessageDTO;
-import lombok.extern.slf4j.Slf4j;
 import net.logstash.logback.stacktrace.ShortenedThrowableConverter;
 import org.slf4j.MDC;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -27,7 +23,6 @@ import static com.ljw.logalarm.core.filter.TraceIdFilter.TRACE_ID;
  * @author lujianwen9@gmail.com
  * @since 2024-08-07 10:45
  */
-@Slf4j
 public class LogAlarmAppender extends AppenderBase<LoggingEvent> {
     private static final Pattern EXCEPTION_PATTERN= Pattern.compile("(.+?): ");
     @Override
@@ -40,11 +35,11 @@ public class LogAlarmAppender extends AppenderBase<LoggingEvent> {
             }
             //构造消息通知内容AlarmService
             String message = initMessage(eventObject);
-            //添加消息到队列
-            LogAlarmContext.logBlockingQueue.add(AlarmMessageDTO.builder().message(message).build());
+            //添加消息到队列，队列满时丢弃，避免告警系统反向影响业务日志线程
+            LogAlarmContext.logBlockingQueue.offer(AlarmMessageDTO.builder().message(message).build());
 
         } catch (Exception e) {
-           log.error(e.getMessage(),e);
+            addError("Failed to append log alarm event.", e);
         }
     }
     private String initMessage(LoggingEvent eventObject) {
