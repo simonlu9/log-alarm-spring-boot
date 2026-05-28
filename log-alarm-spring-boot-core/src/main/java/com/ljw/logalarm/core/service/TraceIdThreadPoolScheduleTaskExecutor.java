@@ -13,6 +13,7 @@ import java.time.Instant;
 import java.util.Map;
 import java.util.concurrent.ScheduledFuture;
 
+import static com.ljw.logalarm.core.filter.LogParamsFilter.APP_NAME;
 import static com.ljw.logalarm.core.filter.TraceIdFilter.TRACE_ID;
 import static com.ljw.logalarm.core.filter.TraceIdFilter.genTraceId;
 
@@ -22,6 +23,15 @@ import static com.ljw.logalarm.core.filter.TraceIdFilter.genTraceId;
  */
 @Slf4j
 public class TraceIdThreadPoolScheduleTaskExecutor extends ThreadPoolTaskScheduler {
+    private final String applicationName;
+
+    public TraceIdThreadPoolScheduleTaskExecutor() {
+        this(null);
+    }
+
+    public TraceIdThreadPoolScheduleTaskExecutor(String applicationName) {
+        this.applicationName = applicationName;
+    }
 
     private Runnable wrapTaskWithMDC(Runnable task) {
         Map<String, String> context = prepareContext(MDC.getCopyOfContextMap());
@@ -32,6 +42,9 @@ public class TraceIdThreadPoolScheduleTaskExecutor extends ThreadPoolTaskSchedul
         Map<String, String> resolved = context == null ? new HashMap<>() : new HashMap<>(context);
         if (!StringUtils.hasText(resolved.get(TRACE_ID))) {
             resolved.put(TRACE_ID, genTraceId());
+        }
+        if (StringUtils.hasText(applicationName)) {
+            resolved.put(APP_NAME, applicationName);
         }
         return resolved;
     }

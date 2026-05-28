@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 public class AsyncService {
     @Async
     public void test() {
-        log.info("async");
+        log.error("async");
     }
 
-    //@Scheduled(fixedRate = 5000) // 每隔 5 秒执行一次
+    @Scheduled(fixedRate = 5000) // 每隔 5 秒执行一次
     public void runTask() {
         log.info("Fixed rate task executed at: " + System.currentTimeMillis());
         throw new RuntimeException("throw error3434");

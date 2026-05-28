@@ -10,6 +10,7 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
+import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
@@ -58,9 +59,12 @@ public class LogAlarmAutoConfiguration implements WebMvcConfigurer {
         return registration;
     }
     @Bean
-    public FilterRegistrationBean<LogParamsFilter> logParamFilter(@Value("${spring.application.name}") String applicationName) {
+    public FilterRegistrationBean<LogParamsFilter> logParamFilter(@Value("${spring.application.name:}") String applicationName) {
         FilterRegistrationBean<LogParamsFilter> registration = new FilterRegistrationBean<>();
-        registration.setFilter(new LogParamsFilter(applicationName));
+        String logAlarmAppName = StringUtils.hasText(logAlarmProperties.getName())
+                ? logAlarmProperties.getName()
+                : applicationName;
+        registration.setFilter(new LogParamsFilter(logAlarmAppName));
         registration.addUrlPatterns("/*");
         registration.setOrder(Ordered.HIGHEST_PRECEDENCE+2);
         registration.setName("logParamsFilter");

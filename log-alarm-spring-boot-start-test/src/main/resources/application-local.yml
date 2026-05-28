@@ -1,5 +1,7 @@
 log-alarm:
   enableTraceId: true
+  # 日志内容里的应用名字段，可自定义；不配置时默认读取 spring.application.name
+  name: ${spring.application.name}
 #  timeout:
 #    settings:
 #      - urlPattern: "^/api.*$" # 匹配以 /test 开头的所有路径

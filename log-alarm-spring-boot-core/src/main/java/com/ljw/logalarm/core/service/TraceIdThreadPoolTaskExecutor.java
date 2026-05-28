@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 
+import static com.ljw.logalarm.core.filter.LogParamsFilter.APP_NAME;
 import static com.ljw.logalarm.core.filter.TraceIdFilter.TRACE_ID;
 import static com.ljw.logalarm.core.filter.TraceIdFilter.genTraceId;
 
@@ -19,6 +20,16 @@ import static com.ljw.logalarm.core.filter.TraceIdFilter.genTraceId;
  */
 @Slf4j
 public class TraceIdThreadPoolTaskExecutor extends ThreadPoolTaskExecutor {
+    private final String applicationName;
+
+    public TraceIdThreadPoolTaskExecutor() {
+        this(null);
+    }
+
+    public TraceIdThreadPoolTaskExecutor(String applicationName) {
+        this.applicationName = applicationName;
+    }
+
     @Override
     public void execute(Runnable runnable) {
         Map<String, String> context = prepareContext(MDC.getCopyOfContextMap());
@@ -43,6 +54,9 @@ public class TraceIdThreadPoolTaskExecutor extends ThreadPoolTaskExecutor {
         Map<String, String> resolved = context == null ? new HashMap<>() : new HashMap<>(context);
         if (!StringUtils.hasText(resolved.get(TRACE_ID))) {
             resolved.put(TRACE_ID, genTraceId());
+        }
+        if (StringUtils.hasText(applicationName)) {
+            resolved.put(APP_NAME, applicationName);
         }
         return resolved;
     }

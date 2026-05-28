@@ -13,6 +13,10 @@ public class LogAlarmProperties {
     public static final String LOG_ALARM_PREFIX = "log-alarm";
     private String webhook;
     private String mode;
+    /**
+     * 日志里应用名字段，未配置时默认读取 spring.application.name
+     */
+    private String name;
     private ErrorExcludeProperties exclude;
 
 }
