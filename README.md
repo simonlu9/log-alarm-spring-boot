@@ -32,6 +32,8 @@
 ```bash
 # 添加配置
 log-alarm:
+# 日志内容里的应用名字段，可自定义；不配置时默认读取 spring.application.name
+  name: test
   #当开启时候,会自动在MDC注入traceID属性
   enableTraceId: true
   #mode可选wordWechat|dingding
